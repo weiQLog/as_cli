@@ -1,0 +1,37 @@
+const { resolve } = require("path");
+module.exports = {
+  build: {
+    assetsRoot: resolve(__dirname, "../dist/"),
+    assetsSubDirectory: "static",
+    NODE_ENV: "production",
+    useThreadLoader: true,
+    productionSourceMap: true,
+    devtool: "source-map",
+    corejsTargets: {
+      chrome: "60",
+      firefox: "60",
+      ie: "9",
+      safari: "10",
+      edge: "17",
+    },
+    bundleAnalyzerReport: true,
+    productionGzip: true,
+    productionGzipExtensions: ["js", "css"],
+  },
+  dev: {
+    host: "192.168.1.104",
+    port: "7001",
+    autoOpenBrowser: true,
+    errorOverlay: true,
+    assetsSubDirectory: "static",
+    assetsPublicPath: "/",
+    proxyTable: {},
+    poll: false,
+    NODE_ENV: "development",
+    showEslintErrorsInOverlay: false,
+    useEslint: true,
+    cssSourceMap: true,
+    cacheBusting: true,
+    devtool: "cheap-module-eval-source-map",
+  },
+};
