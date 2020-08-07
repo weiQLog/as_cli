@@ -4,6 +4,7 @@ const webpack = require("webpack");
 module.exports = {
   entry: {
     vue: ["vue", "vue-router"],
+    // elementUI: ['element-ui']
   },
   output: {
     filename: "[name].js",

@@ -4,7 +4,6 @@ const config = require("../config");
 const vueLoaderConfig = require("./vue.loader.conf");
 const VueLoaderPlugin = require("vue-loader/lib/plugin-webpack4");
 
-
 const createLintingRule = () => ({
   test: /\.(js|vue)$/,
   loader: "eslint-loader",
@@ -21,6 +20,7 @@ module.exports = {
   entry: {
     app: ["./src/app.js", "./index.html"],
   },
+  // entry: ["./src/app.js", "core-js/modules/es.array.iterator"],
   output: {
     path: config.build.assetsRoot,
     filename: "[name].[hash:10].js",

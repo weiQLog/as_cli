@@ -32,11 +32,7 @@ const webpackConfig = merge(baseConfig, {
             usePostCSS: true,
           }),
           utils.jsLoaders({
-            targets: config.build.corejsTargets,
             useThreadLoader: config.build.useThreadLoader,
-            corejs: {
-              version: 3,
-            },
             include: [
               resolve("src"),
               resolve("node_modules/webpack-dev-server/client"),
@@ -72,9 +68,6 @@ const webpackConfig = merge(baseConfig, {
     }),
     //  （模块路径做个hash）来生成模块的id
     new webpack.HashedModuleIdsPlugin(),
-    new webpack.DllReferencePlugin({
-      manifest: path.resolve(__dirname, "../dll/manifest.json"),
-    }),
     new WorkboxWebpackPlugin.GenerateSW({
       clientsClaim: true,
       skipWaiting: true,
@@ -88,15 +81,18 @@ const webpackConfig = merge(baseConfig, {
         },
       ],
     }),
-    new AddAssetHtmlWebpackPlugin({
-      filepath: path.resolve(__dirname, "../dll/vue.js"),
+    new webpack.DllReferencePlugin({
+      manifest: path.resolve(__dirname, "../dll/manifest.json"),
     }),
+    new AddAssetHtmlWebpackPlugin([
+      {filepath: path.resolve(__dirname, "../dll/vue.js"),},
+    ]),
   ],
   //  将node_modules中代码打包一个chunk， 自动分析多入口chunk公共依赖
   optimization: {
     splitChunks: {
-      chunks: 'all'
-    }
+      chunks: "all",
+    },
   },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
 });
@@ -115,7 +111,6 @@ if (config.build.productionGzip) {
     })
   );
 }
-console.log(JSON.stringify(webpackConfig.module.rules[1]))
 if (config.build.bundleAnalyzerReport) {
   const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
     .BundleAnalyzerPlugin;
@@ -128,6 +123,4 @@ if (config.build.bundleAnalyzerReport) {
   );
 }
 
-
-console.log(JSON.stringify(webpackConfig.module.rules[0].oneOf))
 module.exports = webpackConfig;

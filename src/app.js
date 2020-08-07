@@ -1,5 +1,5 @@
 import { hello } from "./assets/js/promise";
-import("./assets/css/app.css");
+import "./assets/css/app.css";
 import ElementUI from "element-ui";
 import App from "./App.vue";
 import Vue from "vue";
@@ -7,6 +7,8 @@ import router from "./router";
 
 hello().then((res) => {
   console.log(res);
+}).catch(error => {
+  console.log(error);
 });
 
 Vue.use(ElementUI);

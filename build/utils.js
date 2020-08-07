@@ -32,16 +32,13 @@ exports.cssLoaders = function(options) {
   };
 
   function generateLoaders(loader, loaderOptions) {
-    const loaders = options.usePostCSS
+    const loaders = isProduction
       ? [
-          isProduction ? miniCssExtraPluginLoader : "style-loader",
+        miniCssExtraPluginLoader,
           cssLoader,
-          postcssLoader,
+          options.usePostCSS ? postcssLoader : {},
         ]
-      : [
-          isProduction ? miniCssExtraPluginLoader : "style-loader",
-          cssLoader,
-        ];
+      : ["style-loader", cssLoader, options.usePostCSS ? postcssLoader : {}];
 
     if (loader) {
       loaders.push({
@@ -92,16 +89,6 @@ exports.jsLoaders = function(options) {
   const babelLoader = {
     loader: "babel-loader",
     options: {
-      presets: [
-        [
-          "@babel/preset-env",
-          {
-            useBuiltIns: "usage",
-            corejs: options.corejs,
-            targets: options.targets,
-          },
-        ],
-      ],
       cacheDirectory: true,
     },
   };

@@ -1,7 +1,12 @@
 export function hello() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve("Hello World");
+      let a = true;
+      if (a) {
+        resolve("hello world");
+      } else {
+        reject("还可以");
+      }
     }, 1000);
   });
 }

@@ -19,10 +19,20 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: [
       {
-        oneOf: utils.styleLoaders({
-          sourceMap: config.dev.cssSourceMap,
-          usePostCSS: true,
-        }),
+        oneOf: [
+          ...utils.styleLoaders({
+            publicPath: "../",
+            sourceMap: config.build.productionSourceMap,
+            usePostCSS: true,
+          }),
+          utils.jsLoaders({
+            useThreadLoader: config.build.useThreadLoader,
+            include: [
+              path.resolve("src"),
+              path.resolve("node_modules/webpack-dev-server/client"),
+            ],
+          }),
+        ],
       },
     ],
   },
@@ -45,6 +55,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     compress: true,
     host: HOST,
     port: PORT,
+    disableHostCheck: true,
     open: config.dev.autoOpenBrowser,
     overlay: config.dev.errorOverlay
       ? { warnings: false, errors: true }
@@ -80,8 +91,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   ],
 });
 
-console.log(JSON.stringify(devWebpackConfig.module.rules));
-
 module.exports = new Promise((resolve, reject) => {
   portfinder.basePort = process.env.PORT || config.dev.port;
   portfinder.getPort((err, port) => {
@@ -90,7 +99,6 @@ module.exports = new Promise((resolve, reject) => {
     } else {
       process.env.PORT = port;
       devWebpackConfig.devServer.port = port;
-
       devWebpackConfig.plugins.push(
         new FriendlyErrorsPlugin({
           compilationSuccessInfo: {
@@ -103,7 +111,6 @@ module.exports = new Promise((resolve, reject) => {
             : undefined,
         })
       );
-
       resolve(devWebpackConfig);
     }
   });
