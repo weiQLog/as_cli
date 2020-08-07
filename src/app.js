@@ -1,7 +1,7 @@
-import { hello } from "./assets/js/promise";
-import "./assets/css/app.css";
+import { hello } from "src/assets/js/promise";
+import "src/assets/css/app.css";
 import ElementUI from "element-ui";
-import App from "./App.vue";
+import App from "src/App.vue";
 import Vue from "vue";
 import router from "./router";
 

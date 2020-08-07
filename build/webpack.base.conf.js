@@ -76,6 +76,9 @@ module.exports = {
     alias: {
       // 别名,在require的时候，可以使用这些别名，来缩短路径的长度
       src: path.resolve(__dirname, "../src/"),
+      assets: path.resolve(__dirname, "../src/assets/"),
+      components: path.resolve(__dirname, "../src/components/"),
+      router: path.resolve(__dirname, "../src/router/"),
     },
     extensions: [".js", ".vue", ".json"],
   },
