@@ -4,15 +4,26 @@ import ElementUI from "element-ui";
 import App from "src/App.vue";
 import Vue from "vue";
 import router from "./router";
+import index from "components/index";
+// import mock from "assets/mock";
 
-hello().then((res) => {
-  console.log(res);
-}).catch(error => {
-  console.log(error);
-});
+if (process.env.NODE_ENV === "development") {
+  import('../src/assets/mock')
+}
+
+console.log();
+
+hello()
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
 Vue.use(ElementUI);
 Vue.use(router);
+Vue.use(index);
 const root = document.createElement("div");
 document.body.appendChild(root);
 
