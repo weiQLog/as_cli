@@ -43,6 +43,8 @@ module.exports = {
             test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
             loader: "url-loader",
             options: {
+              // esModule 默认为true, 需要手动设置成false， 否则图片路径会编译成  [object Module]
+              esModule: false,
               limit: 10000,
               name: utils.assetsPath("img/[name].[hash:10].[ext]"),
             },
