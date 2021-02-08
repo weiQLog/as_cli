@@ -1,15 +1,20 @@
-import Vue from "vue";
-import Router from "vue-router";
-import HelloWorld from "src/components/HelloWorld";
+import Vue from 'vue'
+import Router from 'vue-router'
+import index from 'components/index/index'
+import login from 'components/Login/Login.vue'
 
-Vue.use(Router);
+Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: "/index",
-      name: "HelloWorld",
-      component: HelloWorld,
+      path: '',
+      component: index,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: login,
     },
   ],
-});
+})
