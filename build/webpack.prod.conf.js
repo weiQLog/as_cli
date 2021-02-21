@@ -27,6 +27,7 @@ const webpackConfig = merge(baseConfig, {
       {
         oneOf: [
           ...utils.styleLoaders({
+            // publickPath
             publicPath: '../../',
             sourceMap: config.build.productionSourceMap,
             usePostCSS: true,
