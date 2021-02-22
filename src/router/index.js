@@ -19,6 +19,11 @@ let router = new Router({
   ],
 })
 
+const originalPush = Router.prototype.push
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch((err) => err)
+}
+
 router.beforeEach((to, from, next) => {
   //beforeEach是router的钩子函数，在进入路由前执行
   if (to.meta.title) {
