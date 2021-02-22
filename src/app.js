@@ -8,7 +8,7 @@ import examplePlugins from './plugins/examplePlugins/examplePlugins'
 import popup from './plugins/popup/popup'
 
 if (process.env.NODE_ENV === 'development') {
-  import('../src/assets/mock')
+    import ('../src/assets/mock')
 }
 
 Vue.use(ElementUI)
@@ -20,13 +20,13 @@ const root = document.createElement('div')
 document.body.appendChild(root)
 
 new Vue({
-  // 注入到根实例中
-  render: (h) => h(App),
-  router,
+    // 注入到根实例中
+    render: (h) => h(App),
+    router,
 }).$mount(root)
 
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js')
-  })
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+    })
 }

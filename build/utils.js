@@ -6,104 +6,106 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const isProduction = process.env.NODE_ENV === "production";
 
 exports.cssLoaders = function(options) {
-  options = options || {};
+    options = options || {};
 
-  const cssLoader = {
-    loader: "css-loader",
-    options: {
-      sourceMap: options.sourceMap,
-    },
-  };
+    const cssLoader = {
+        loader: "css-loader",
+        options: {
+            sourceMap: options.sourceMap,
+        },
+    };
 
-  const miniCssExtraPluginLoader = {
-    loader: MiniCssExtractPlugin.loader,
-    options: {
-      publicPath: options.publicPath,
-    },
-  };
+    const miniCssExtraPluginLoader = {
+        loader: MiniCssExtractPlugin.loader,
+        options: {
+            publicPath: options.publicPath,
+        },
+    };
 
-  const postcssLoader = {
-    loader: "postcss-loader",
-    options: {
-      ident: "postcss",
-      plugins: () => [postcssPresetEnv()],
-      sourceMap: options.sourceMap,
-    },
-  };
+    const postcssLoader = {
+        loader: "postcss-loader",
+        options: {
+            ident: "postcss",
+            plugins: () => [postcssPresetEnv()],
+            sourceMap: options.sourceMap,
+        },
+    };
 
-  function generateLoaders(loader, loaderOptions) {
-    const loaders = isProduction
-      ? [
-        miniCssExtraPluginLoader,
-          cssLoader,
-          options.usePostCSS ? postcssLoader : {},
-        ]
-      : ["style-loader", cssLoader, options.usePostCSS ? postcssLoader : {}];
+    function generateLoaders(loader, loaderOptions) {
+        const loaders = isProduction ? [
+            miniCssExtraPluginLoader,
+            cssLoader,
+            options.usePostCSS ? postcssLoader : {},
+        ] : ["style-loader", cssLoader, options.usePostCSS ? postcssLoader : {}];
 
-    if (loader) {
-      loaders.push({
-        loader: loader + "-loader",
-        options: Object.assign({}, loaderOptions, {
-          sourceMap: options.sourceMap,
-        }),
-      });
+        if (loader) {
+            loaders.push({
+                loader: loader + "-loader",
+                options: Object.assign({}, loaderOptions, {
+                    sourceMap: options.sourceMap,
+                }),
+            });
+        }
+        return loaders;
     }
-    return loaders;
-  }
 
-  return {
-    css: generateLoaders(),
-    postcss: generateLoaders(),
-    less: generateLoaders("less"),
-    sass: generateLoaders("sass", { indentedSyntax: true }),
-    scss: generateLoaders("sass"),
-    stylus: generateLoaders("stylus"),
-    styl: generateLoaders("stylus"),
-  };
+    return {
+        css: generateLoaders(),
+        postcss: generateLoaders(),
+        less: generateLoaders("less"),
+        sass: generateLoaders("sass", { indentedSyntax: true }),
+        scss: generateLoaders("sass"),
+        stylus: generateLoaders("stylus"),
+        styl: generateLoaders("stylus"),
+    };
 };
 
 exports.styleLoaders = function(options) {
-  const output = [];
-  const loaders = exports.cssLoaders(options);
+    const output = [];
+    const loaders = exports.cssLoaders(options);
 
-  for (const extension in loaders) {
-    const loader = loaders[extension];
-    output.push({
-      test: new RegExp("\\." + extension + "$"),
-      use: loader,
-    });
-  }
-  return output;
+    for (const extension in loaders) {
+        const loader = loaders[extension];
+        output.push({
+            test: new RegExp("\\." + extension + "$"),
+            use: loader,
+        });
+    }
+    return output;
 };
 
 exports.jsLoaders = function(options) {
-  options = options || {};
+    options = options || {};
 
-  const threadLoader = {
-    loader: "thread-loader",
-    options: {
-      workers: config.build.threadLoaderWorkers,
-    },
-  };
+    const threadLoader = {
+        loader: "thread-loader",
+        options: {
+            workers: config.build.threadLoaderWorkers,
+        },
+    };
 
-  const babelLoader = {
-    loader: "babel-loader",
-    options: {
-      cacheDirectory: true,
-    },
-  };
+    const babelLoader = {
+        loader: "babel-loader",
+        options: {
+            cacheDirectory: true,
+        },
+    };
 
-  return {
-    test: new RegExp("\\.js$"),
-    include: options.include,
-    use: [options.useThreadLoader ? threadLoader : {}, babelLoader],
-  };
+    const ignoreLoader = {
+        loader: 'ignore-loader'
+    }
+
+    return {
+        test: new RegExp("\\.js$"),
+        include: options.include,
+        use: [options.useThreadLoader ? threadLoader : {}, babelLoader, ignoreLoader],
+    };
 };
 
 exports.assetsPath = function(_path) {
-  const assetsSubDirectory =
-    process.env.NODE_ENV === "production"
-      ? config.build.assetsSubDirectory
-      : config.dev.assetsSubDirectory;
-  return path.posix.join(assetsSubDirectory, _path);
+    const assetsSubDirectory =
+        process.env.NODE_ENV === "production" ?
+        config.build.assetsSubDirectory :
+        config.dev.assetsSubDirectory;
+    return path.posix.join(assetsSubDirectory, _path);
 };
