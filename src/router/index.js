@@ -23,9 +23,6 @@ Router.prototype.push = function push(location) {
     return originalPush.call(this, location).catch((err) => err)
 }
 
-const a = "这就是三门半的代码"
-console.log("看看能不能删掉这个", a);
-
 router.beforeEach((to, from, next) => {
     //beforeEach是router的钩子函数，在进入路由前执行
     if (to.meta.title) {
