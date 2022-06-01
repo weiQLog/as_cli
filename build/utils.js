@@ -95,10 +95,13 @@ exports.jsLoaders = function(options) {
         loader: 'ignore-loader'
     }
 
+    let loaders = [options.useThreadLoader ? threadLoader : {}, babelLoader]
+    if (isProduction) loaders.push(ignoreLoader)
+
     return {
         test: new RegExp("\\.js$"),
         include: options.include,
-        use: [options.useThreadLoader ? threadLoader : {}, babelLoader, ignoreLoader],
+        use: loaders,
     };
 };
 

@@ -19,7 +19,7 @@ module.exports = {
     productionGzipExtensions: ['js', 'css'],
   },
   dev: {
-    host: '192.168.31.40',
+    host: '127.0.0.1',
     port: '7001',
     autoOpenBrowser: true,
     errorOverlay: true,
